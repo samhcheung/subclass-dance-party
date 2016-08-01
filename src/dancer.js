@@ -8,13 +8,13 @@ var Dancer = function(top, left, timeBetweenSteps) {
   this.step();
   this.setPosition();
 
-
 };
 
 Dancer.prototype.step = function() {
+  console.log('i am in step of Dancer');
     // the basic dancer doesn't do anything interesting at all on each step,
     // it just schedules the next step
-    setTimeout(this.step, this.timeBetweenSteps);
+  setTimeout(this.step.bind(this), this.timeBetweenSteps);
 };
 
 Dancer.prototype.setPosition = function(top, left) {
