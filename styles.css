@@ -5,13 +5,21 @@ body{
   margin: 0px;
   background-color:#444;
   font-size: 18px;
+  background-image: url('background.jpg');
+  background-position: 0 -1950px ;
+  background-size:cover;
 }
+
 body, a:link, a:visited, a:active{
   color: lightblue;
 }
 .title, .addDancerButton{
   padding:5px 12px;
   float:right;
+}
+.doAction{
+  padding:5px 12px;
+  float:left;
 }
 .topbar{
   height:32px;
@@ -78,9 +86,4 @@ body, a:link, a:visited, a:active{
 .img {
   width: 300;
   height: auto;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
 }

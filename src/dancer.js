@@ -2,6 +2,8 @@
 var Dancer = function(top, left, timeBetweenSteps) {
   this.top = top;
   this.left = left;
+  this.oldTop = top;
+  this.oldLeft = left;
   this.timeBetweenSteps = timeBetweenSteps;
   // use jQuery to create an HTML <span> tag
   this.$node = $('<span class="dancer"></span>');
@@ -18,14 +20,16 @@ Dancer.prototype.step = function() {
 };
 
 Dancer.prototype.lineUp = function(height, width) {
-  //this.setPosition(500, width);
-  //this.$node.css({position: 'relative', top: height, left: 0});
-  //this.$node.animate({top:'500', left: width}, 100);
-  //width = width+ 0.5*this.$node.width();
-  console.log(width);
-  width = width - this.$node.width()*0.5;
+
+  // console.log('before lineup left',this.left);
+  // console.log('before lineup top', this.top);
+  width = width - this.$node.width() * 0.5;
+  height = height - this.$node.height() * 0.5;
   this.$node.animate({top: height, left: width, leaveTransforms:true }, 1000);
-  //this.$node.animate({left: '+50%', leaveTransforms:true }, 1000);
+  // console.log('left', this.oldLeft);
+  // console.log('top', this.oldTop);
+  this.left = width;
+  this.top = height;
 };
 
 Dancer.prototype.setPosition = function(top, left) {

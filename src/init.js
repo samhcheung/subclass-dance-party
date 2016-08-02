@@ -1,36 +1,75 @@
 $(document).ready(function() {
   window.dancers = [];
-  function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  while (0 !== currentIndex) {
+  var shuffle = function(array) {
+    var currentIndex = array.length;
+    var temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
 
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
 
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
 
-  return array;
-}
-  
-  
+    return array;
+  };
+
+
+
   $('.lineUp').on('click', function(event) {
     var $bodyWidth = $('body').width();
-    console.log($bodyWidth);
+    
     var $bodyHeight = $('body').height();
-    var $resizedbodyWidth = $('body').width();
-    var totalWidth = window.dancers.length+1;
-    var division = $bodyWidth/totalWidth;
+    var totalWidth = window.dancers.length + 1;
     window.dancers = shuffle(window.dancers);
     
-    
-    for (var i = 0; i < totalWidth-1; i++) {
-      dancers[i].lineUp($bodyHeight/2, 100/totalWidth*0.01*$bodyWidth*(i+1));
-      //dancers[i].lineUp($bodyHeight/2, i * division + division * (1/(totalWidth)));
+    for (var i = 0; i < totalWidth - 1; i++) {
+      dancers[i].lineUp($bodyHeight / 2, 1 / totalWidth * $bodyWidth * (i + 1));
+
     }
   });
+
+  $('.random').on('click', function(event) {
+    for (var i = 0; i < window.dancers.length; i++) {
+      // console.log(window.dancers[i].oldLeft, window.dancers[i].oldRight);
+      window.dancers[i].lineUp(window.dancers[i].oldTop, window.dancers[i].oldLeft);
+      dancers[i].top = dancers[i].oldTop;
+      dancers[i].left = dancers[i].oldLeft;
+    }
+  });
+
+  var checkNeighbors = function(dancer) {
+
+    var killEnemies = function(tokill) {
+      var distance = Math.sqrt(Math.pow(window.dancers[i].top - dancer.top, 2) + Math.pow(window.dancers[i].left - dancer.left, 2));
+      if (distance < 125) {
+        tokill.$node.addClass('killed');
+        console.log('killed!');
+      }
+    };
+
+    for (var i = 0; i < window.dancers.length; i++) {
+      var type = dancer.$node.hasClass('pokemon') ? 'pokemon' : 'pokeball';
+      if (type === 'pokemon' && window.dancers[i].$node.hasClass('pokeball')) {
+        killEnemies(dancer);
+      }
+      if (type === 'pokeball' && window.dancers[i].$node.hasClass('pokemon')) {
+        killEnemies(window.dancers[i]);
+      }
+    }
+    var newArr = [];
+    for (var i = 0; i < window.dancers.length; i++) {
+      if (!window.dancers[i].$node.hasClass('killed')) {
+        newArr.push(window.dancers[i]);
+      } 
+    }
+    window.dancers = newArr;
+    $('.killed').remove();
+
+  };
+
   $('.addDancerButton').on('click', function(event) {
     /* This function sets up the click handlers for the create-dancer
      * buttons on dancefloor.html. You should only need to make one small change to it.
@@ -59,6 +98,16 @@ $(document).ready(function() {
     );
     $('body').append(dancer.$node);
     window.dancers.push(dancer);
+    // $('.dancer').off("click");
+    dancer.$node.on('mouseover', function(event) {
+      
+      var random1 = Math.random() * 200 - 100;
+      var random2 = Math.random() * 200 - 100;
+      dancer.top += random1;
+      dancer.left += random2;
+     $(this).animate({top: dancer.top, left: dancer.left, leaveTransforms:true}, 'fast');
+     checkNeighbors(dancer);
+    });
 
   });
 });
