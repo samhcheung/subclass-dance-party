@@ -3,6 +3,8 @@ var GrowingDancer = function(top, left, timeBetweenSteps) {
   Dancer.call(this, top, left, timeBetweenSteps);
   // this.oldStep = Dancer.prototype.step;
   // console.log('inside blinkdancer constructor', this.oldStep);
+  this.$node.addClass('heart');
+  this.$node.removeClass('dancer');
 };
 
 GrowingDancer.prototype = Object.create(Dancer.prototype);
@@ -16,16 +18,19 @@ GrowingDancer.prototype.step = function() {
   // call the old version of step at the beginning of any call to this new version of step
   Dancer.prototype.step.call(this);
   $newNode = $('<span class="dancer"></span>');
-  this.top = (this.top + 30) % $("body").height();
-  this.left = (this.left + 30) % $("body").width();
+  //this.top = (this.top + 150) % $('body').height();
+  //this.left = (this.left + 150) % $('body').width();
   var styleSettings = {
     top: this.top,
     left: this.left
   };
   this.$node.css(styleSettings);
-  $newNode.css(styleSettings);
-  $('body').append($newNode);
-  console.log(window.dancers);
+  this.$node.animate({opacity: '0.3'}, "slow");
+  this.$node.animate({opacity: '0.8'}, "slow");
+  //$newNode.css(styleSettings);
+  //$newNode.addClass('heart');
+  //$('body').append($newNode);
+  
   // toggle() is a jQuery method to show/hide the <span> tag.
   // See http://api.jquery.com/category/effects/ for this and
    // other effects you can use on a jQuery-wrapped html tag.
