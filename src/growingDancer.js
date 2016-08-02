@@ -20,13 +20,13 @@ GrowingDancer.prototype.step = function() {
   $newNode = $('<span class="dancer"></span>');
   //this.top = (this.top + 150) % $('body').height();
   //this.left = (this.left + 150) % $('body').width();
-  var styleSettings = {
-    top: this.top,
-    left: this.left
-  };
-  this.$node.css(styleSettings);
-  this.$node.animate({opacity: '0.3'}, "slow");
-  this.$node.animate({opacity: '0.8'}, "slow");
+  //var styleSettings = {
+  //  top: this.top,
+  //  left: this.left
+  //};
+  //this.$node.css(styleSettings);
+  this.$node.animate({opacity: '0.3'}, "fast");
+  this.$node.animate({opacity: '0.8'}, "fast");
   //$newNode.css(styleSettings);
   //$newNode.addClass('heart');
   //$('body').append($newNode);

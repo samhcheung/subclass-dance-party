@@ -1,12 +1,34 @@
 $(document).ready(function() {
   window.dancers = [];
+  function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+  
+  
   $('.lineUp').on('click', function(event) {
     var $bodyWidth = $('body').width();
+    console.log($bodyWidth);
+    var $bodyHeight = $('body').height();
     var $resizedbodyWidth = $('body').width();
-    var totalWidth = window.dancers.length;
+    var totalWidth = window.dancers.length+1;
     var division = $bodyWidth/totalWidth;
-    for (var i = 0; i < totalWidth; i++) {
-      dancers[i].lineUp(i * division + division * (1/(totalWidth)));
+    window.dancers = shuffle(window.dancers);
+    
+    
+    for (var i = 0; i < totalWidth-1; i++) {
+      dancers[i].lineUp($bodyHeight/2, 100/totalWidth*0.01*$bodyWidth*(i+1));
+      //dancers[i].lineUp($bodyHeight/2, i * division + division * (1/(totalWidth)));
     }
   });
   $('.addDancerButton').on('click', function(event) {
@@ -33,7 +55,7 @@ $(document).ready(function() {
     var dancer = new dancerMakerFunction(
       $("body").height() * Math.random(),
       $("body").width() * Math.random(),
-      Math.random() * 1000
+      Math.max(500, (Math.random() * 2000))
     );
     $('body').append(dancer.$node);
     window.dancers.push(dancer);

@@ -18,11 +18,11 @@ FunnyDancer.prototype.constructor = FunnyDancer;
 
 FunnyDancer.prototype.step = function() {
   // call the old version of step at the beginning of any call to this new version of step
-  $('img').width(300);
+
   Dancer.prototype.step.call(this);
 
-  this.$node.animate({top:'+=40'}, 1000);
-  this.$node.animate({top:'-=40'}, 1000);
+  this.$node.animate({top:'+=40'}, "fast");
+  this.$node.animate({top:'-=40'}, "fast");
   //console.log('width', $('.picture').width());
 
 
