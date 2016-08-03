@@ -46,6 +46,19 @@ $(document).ready(function() {
       var distance = Math.sqrt(Math.pow(window.dancers[i].top - dancer.top, 2) + Math.pow(window.dancers[i].left - dancer.left, 2));
       if (distance < 125) {
         tokill.$node.addClass('killed');
+        var $animation = $('<span class="picture"><img height="100" width="130" src=captureanimation.gif></span>');
+        var styleSettings = {
+          top: tokill.top,
+          left: tokill.left,
+        };
+        $('body').append($animation);
+        $animation.fadeIn();
+        $animation.css(styleSettings);
+        setTimeout(function() {
+          $animation.remove();
+          $animation.fadeOut();
+        }, 1000);
+        
         console.log('killed!');
       }
     };
@@ -66,7 +79,9 @@ $(document).ready(function() {
       } 
     }
     window.dancers = newArr;
-    $('.killed').remove();
+    $('.killed').fadeOut();
+    setTimeout($('.killed').remove.bind(this), 1000);
+    // $('.killed').remove();
 
   };
 
