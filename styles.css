@@ -7,7 +7,9 @@ body{
   font-size: 18px;
   background-image: url('background.jpg');
   background-position: 0 -1950px ;
+  background-attachment: fixed;
   background-size:cover;
+  background-position: center
 }
 
 body, a:link, a:visited, a:active{

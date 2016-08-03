@@ -27,6 +27,7 @@ $(document).ready(function() {
     
     for (var i = 0; i < totalWidth - 1; i++) {
       dancers[i].lineUp($bodyHeight / 2, 1 / totalWidth * $bodyWidth * (i + 1));
+      dancers[i].$node.addClass('lineUp');
 
     }
   });
@@ -37,6 +38,7 @@ $(document).ready(function() {
       window.dancers[i].lineUp(window.dancers[i].oldTop, window.dancers[i].oldLeft);
       dancers[i].top = dancers[i].oldTop;
       dancers[i].left = dancers[i].oldLeft;
+      dancers[i].$node.removeClass('lineUp');
     }
   });
 
@@ -44,9 +46,9 @@ $(document).ready(function() {
 
     var killEnemies = function(tokill) {
       var distance = Math.sqrt(Math.pow(window.dancers[i].top - dancer.top, 2) + Math.pow(window.dancers[i].left - dancer.left, 2));
-      if (distance < 125) {
+      if (distance < 100) {
         tokill.$node.addClass('killed');
-        var $animation = $('<span class="picture"><img height="100" width="130" src=captureanimation.gif></span>');
+        var $animation = $('<span class="picture"><img height="120" width="150" src=captureanimation.gif></span>');
         var styleSettings = {
           top: tokill.top,
           left: tokill.left,
@@ -120,8 +122,14 @@ $(document).ready(function() {
       var random2 = Math.random() * 200 - 100;
       dancer.top += random1;
       dancer.left += random2;
-     $(this).animate({top: dancer.top, left: dancer.left, leaveTransforms:true}, 'fast');
-     checkNeighbors(dancer);
+      dancer.top = Math.max(dancer.top, 0);
+      dancer.left = Math.max(dancer.left, 0);
+
+      dancer.top = Math.min(dancer.top, $('body').height() - 64);
+      dancer.left = Math.min(dancer.left, $('body').width() - 64);
+
+      $(this).animate({top: dancer.top, left: dancer.left, leaveTransforms: true}, 'fast');
+      checkNeighbors(dancer);
     });
 
   });
